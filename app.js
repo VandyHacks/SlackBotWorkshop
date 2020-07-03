@@ -41,7 +41,7 @@ app.command("/pat", async ({ command, ack, client, context }) => {
         user: command.user_id
       });
       console.log(result);
-      
+
     } else {
       const result = await client.reminders.add({
         token: process.env.USER_TOKEN,
@@ -74,6 +74,44 @@ app.command("/pat", async ({ command, ack, client, context }) => {
         user: command.user_id
       });
     }
+  }
+});
+
+app.command("/pat2", async ({ command, ack, say, client, context }) => {
+  // Acknowledge incoming command event
+  ack();
+  //expect format "1 9 0 0 message"
+  try {
+    let commands = command.text.trim().split(" ");
+    let time = new Date();
+    console.log(commands);
+    if (commands[0].toLowerCase() == "tomorrow") {
+      time.setDate(time.getDate() + 1);
+    }
+
+    time.setDate(time.getDate() + parseInt(commands[0]));
+
+    time.setHours(
+      parseInt(commands[1]) + 5,
+      parseInt(commands[2]),
+      parseInt(commands[3])
+    );
+
+    // Call the chat.scheduleMessage method using the built-in WebClient
+    const result = await client.chat.scheduleMessage({
+      // The token you used to initalize the app
+      token: context.botToken,
+      channel: command.channel_id,
+      text: commands.slice(4).join(" "),
+      // Time to post message, in Unix Epoch timestamp format
+      post_at: time.getTime() / 1000
+    });
+    // await say(`pat pat, your reminder is set at ${time.toString()}`);
+    console.log(`pat pat, your reminder is set at ${time.toString()}`);
+    // Print result
+    console.log(result);
+  } catch (error) {
+    console.error(error);
   }
 });
 

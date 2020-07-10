@@ -1,5 +1,5 @@
 # Building A Slackbot
-Hackpack for VandyHack's Slackbot workshop on July 10th. This bot's functionality includes creating task reminders and group polls.
+Hackpack for VandyHack's Slackbot workshop on July 11th. This bot's functionality includes creating task reminders and group polls.
 
 ## What exactly is a bot?
 A **bot** is both a *system user* and an *application* operating inside an infrastructure. Bots are particularly useful for performing small, repetitive tasks in user workspaces.
